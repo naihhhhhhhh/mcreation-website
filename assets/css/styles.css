@@ -1,0 +1,1609 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  --hue: 21;
+  --first-color: hsl(var(--hue), 80%, 49%);
+  --first-color-alt: hsl(var(--hue), 76%, 45%);
+  --white-color: hsl(0, 0%, 98%);
+  --black-color: hsl(0, 0%, 1%);
+  --text-color: hsl(var(--hue), 2%, 66%);
+  --body-color: hsl(var(--hue), 100%, 1%);
+  --container-color: hsl(var(--hue), 2%, 10%);
+  --conic-gradient: conic-gradient(
+    from 150deg at 50% 45%,
+    hsl(var(--hue), 80%, 20%) 0deg,
+    hsl(var(--hue), 80%, 48%) 140deg,
+    hsl(var(--hue), 80%, 20%) 360deg
+  );
+  --pulse-scale: 1.2;
+
+  /*========== Font and typography ==========*/
+  --body-font: "Poppins", sans-serif;
+  --second-font: "Poppins", sans-serif;
+  --biggest-font-size: 2.5rem;
+  --h1-font-size: 1.5rem;
+  --h2-font-size: 1.25rem;
+  --h3-font-size: 1rem;
+  --normal-font-size: 0.938rem;
+  --small-font-size: 0.813rem;
+  --smaller-font-size: 0.75rem;
+
+  /*========== Font weight ==========*/
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semi-bold: 600;
+
+  /*========== z index ==========*/
+  --z-tooltip: 10;
+  --z-fixed: 100;
+}
+
+/*========== Responsive typography ==========*/
+@media screen and (min-width: 1168px) {
+  :root {
+    --biggest-font-size: 3.5rem;
+    --h1-font-size: 2.25rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: 0.875rem;
+    --smaller-font-size: 0.813rem;
+  }
+}
+
+/*—————————————————————————————————————————
+  PROJECTS: FIX ALL-PROJECTS LAYOUT + GLOW ONLY VIA BOX-SHADOW
+—————————————————————————————————————————*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body,
+input,
+textarea,
+button {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+}
+
+body {
+  background-color: var(--body-color);
+  color: var(--white-color);
+}
+
+input,
+button,
+textarea {
+  border: none;
+  outline: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--white-color);
+  font-weight: var(--font-semi-bold);
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/*=============== REUSABLE CSS CLASSES ===============*/
+.container {
+  max-width: 1168px;
+  margin-inline: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.section {
+  padding-block: 2rem 3rem;
+}
+
+.section__title {
+  font-size: var(--h2-font-size);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.main {
+  overflow: hidden;
+}
+/* ——— Stats Cards ——— */
+/* ——— Stats Cards ——— */
+#stats {
+  /* semi-transparent dark overlay + heavy blur behind */
+  background: transparent;
+   backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 3rem 1rem;      /* more breathing room */
+  border-radius: 2rem;
+  margin: 2rem 0;
+  padding: 2rem 0;            /* separate from other sections */
+}
+.stats__container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+   gap: 4rem;
+  margin-top: 0;
+}
+
+/* Card base */
+.stats__card {
+  flex: 0 1 260px;         /* base width = 260px, but shrink/grow if needed */
+  width: 280px;
+  height: 140px;
+  padding: 1rem 1.5rem;  /* a little extra padding */
+  position: relative;
+  background: #1a1a1f;     /* keep your dark “canvas” */
+  border-radius: 2rem;
+  
+  /* glowing outline */
+  border: 2px solid var(--first-color-alt);
+  box-shadow:
+    0 0 10px var(--first-color-alt),
+    0 0 20px var(--first-color),
+    inset 0 0 5px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover “pop” */
+.stats__card:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 20px var(--first-color-alt),
+    0 0 40px var(--first-color),
+    inset 0 0 8px rgba(0,0,0,0.6);
+}
+
+/* Rotating radial glow */
+.stats__card::before {
+  display: none !important;
+  /* if you ever want to keep it but just stop the spin, you could do:
+     animation: none !important;
+     background: none !important;
+  */
+}
+
+@keyframes rotateGlow {
+  from   { transform: translate(0,0) rotate(   0deg) }
+  to     { transform: translate(0,0) rotate(360deg) }
+}
+
+/* Number styling with gradient text */
+.stats__number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg,
+    var(--first-color),
+    var(--first-color-alt)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+/* Label */
+.stats__label {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+
+/*=============== NAV ===============*/
+.nav {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 0;
+  right: 0;
+  background-color: hsla(0, 0%, 98%, 0.1);
+  width: 88%;
+  margin-inline: auto;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 1rem 2rem;
+  border-radius: 4rem;
+  z-index: var(--z-fixed);
+}
+
+.nav__list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__link {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  color: var(--white-color);
+  font-size: 1.5rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background-color 0.6s;
+}
+
+/* Active link */
+.active-link {
+  background-color: var(--first-color);
+}
+
+/*=============== HOME ===============*/
+/*===== PERFIL =====*/
+
+.perfil__img {
+  position: absolute;       /* keep it positioned over the card */
+  top: 50%;                 /* center vertically */
+  left: 50%;                /* center horizontally */
+  transform: translate(-50%, -50%);
+  border-radius: inherit;
+  height: 100%;             /* fill the container’s height */
+  width: auto;              /* auto width to preserve aspect ratio */
+
+  object-fit: cover;        /* maintain ratio, crop only top/bottom if needed */
+  object-position: center;  /* center the crop */
+}
+
+
+.perfil__data {
+  align-self: flex-end;
+  background-color: hsla(0, 0%, 1%, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 1.5rem 1rem;
+  border-radius: 1.5rem;
+  border: hsla(0, 0%, 100%, 0.5);
+}
+
+.perfil__name {
+  font: var(--font-regular) var(--biggest-font-size) var(--second-font);
+  margin-bottom: 1rem;
+}
+
+
+
+.perfil__buttons .button {
+  padding: 0.75rem 0;
+}
+/* ── FORCE DARK FILL + VISIBLE OVERFLOW ── */
+/* ─── PERFIL BORDER (sharp + blur) ─── */
+/* ───────── PERFIL: ORANGE FILL + BORDER-ONLY ORANGE→YELLOW ANIMATION ───────── */
+.perfil {
+  position: relative;
+  background: var(--first-color-alt); /* your orange fill */
+  border-radius: 2rem;
+  overflow: visible;                  /* allow the glow out */
+  z-index: 0;
+  display: grid !important;
+  grid-template-rows: 1fr auto !important; /* content above, buttons below */
+}
+
+
+/* sharp orange→yellow border */
+.perfil::before {
+  content: '';
+  position: absolute;
+  inset: 0;                     /* cover the card exactly */
+  padding: 2px;                 /* border thickness */
+  border-radius: inherit;
+
+  /* two backgrounds:
+     1) a solid orange padding-box
+     2) an animated orange→yellow border-box */
+  background:
+    linear-gradient(var(--first-color-alt), var(--first-color-alt)) padding-box,
+    linear-gradient(
+      45deg,
+      var(--first-color-alt),
+      #ffeb3b,
+      var(--first-color-alt)
+    ) border-box;
+
+  background-origin: padding-box, border-box;
+  background-clip:  padding-box, border-box;
+  background-size: 200% 200%;   /* make it “wider” to animate */
+  animation: steam 6s linear infinite;
+  z-index: -1;                   /* under the card’s content */
+}
+
+/* soft glow of the same gradient */
+.perfil::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background:
+    linear-gradient(
+      45deg,
+      var(--first-color-alt),
+      #ff0000,
+      var(--first-color-alt),
+       #ffd900,
+      var(--first-color-alt)
+    );
+  background-size: 200% 200%;
+  animation: steam 6s linear infinite;
+  filter: blur(30px);
+  opacity: 0.6;
+  z-index: -2;                   /* behind everything */
+}
+
+@keyframes steam {
+  0%   { background-position:   0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position:   0% 50%; }
+}
+.perfil__buttons {
+  display: grid;
+  column-gap: 0.5rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+/*===== INFO & ABOUT & SKILLS =====*/
+.info,
+.about,
+.skills {
+  background-color: var(--container-color);
+  padding: 2rem 1.5rem;
+  border-radius: 2rem;
+}
+
+.info__circle {
+  width: 2rem;
+  height: 2rem;
+  background-color: var(--first-color);
+  border-radius: 50%;
+}
+
+.info__name {
+  font: var(--font-semi-bold) var(--h1-font-size) var(--second-font);
+}
+
+.info__data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.info__img {
+  width: 140px;
+  justify-self: center;
+  align-self: flex-end;
+}
+
+.info__description {
+  font-size: var(--small-font-size);
+  margin-bottom: 2rem;
+}
+
+.info .button {
+  width: 100%;
+}
+
+.about__name {
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-regular);
+  margin-bottom: 1rem;
+}
+
+.about__social {
+  display: flex;
+  justify-content: center;
+  column-gap: 1.5rem;
+  margin-block: 2rem;
+}
+
+.about__link {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--white-color);
+  color: var(--black-color);
+  font-size: 1.5rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background-color 0.4s, color 0.4s;
+}
+
+.about__link:hover {
+  background-color: var(--first-color);
+  color: var(--white-color);
+}
+
+.about__image {
+  background: var(--conic-gradient);
+  height: 180px;
+  border-radius: 2rem;
+  display: grid;
+  overflow: hidden;
+}
+.about__image img.about__img {
+  position: absolute !important;
+  top: 50%   !important;
+  left: 50%  !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100%   !important;
+  height: 100%  !important;
+  object-fit: cover;
+  object-position: center;
+}
+.about__image {
+  position: relative;
+  overflow: hidden; /* you already have this, but just in case */
+}
+
+.about__note {
+  font-size: var(--small-font-size);
+  margin-block: 1rem 2rem;
+}
+
+.about .button {
+  width: 100%;
+}
+
+.skills__title {
+  font-size: var(--h2-font-size);
+}
+
+.skills__item {
+  width: 1.5rem;
+  transition: transform 0.4s;
+}
+
+.skills__item:hover {
+  transform: translateY(-0.25rem);
+}
+
+.skills__items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  margin-block: 1.5rem;
+}
+
+.skills__description {
+  font-size: var(--small-font-size);
+}
+
+/*=============== BUTTON ===============*/
+/* ==============================================
+   BUTTON CORNER ANIMATION (applies to .button)
+   ============================================== */
+
+/* ─── GLOBAL BUTTON EDGE ANIMATION ─── */
+/* ───────── BUTTON EDGE ANIMATION ───────── */
+/* ───────────────────────────────────────────────
+/*────────────────────────────────────
+  BUTTON CONIC-GRADIENT WRAPPER
+────────────────────────────────────*/
+
+/*──────────────────────────────────────────
+  ANIMATED ROUNDED BORDER FOR .animate-border
+──────────────────────────────────────────*/
+/* ───────── BUTTON BASE ───────── */
+.button {
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  padding: .75rem 2rem;             /* pill sizing */
+  background: #272727;               /* dark gray/black interior */
+  color: #fff;
+  font-size: 1rem;
+                /* keeps the pill shape */
+  overflow: hidden;                  /* clip the animated spans */
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ───────── INNER SHEEN (optional) ───────── */
+.button::before {
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px; bottom: 2px;
+  width: 50%;
+  background: rgba(255,255,255,0.05);
+  pointer-events: none;
+}
+
+/* ───────── ANIMATED ORANGE EDGES ───────── */
+/* top edge */
+.button span:nth-of-type(1) {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--first-color),      /* main orange */
+    var(--first-color-alt)   /* lighter orange */
+  );
+  animation: edgeX 2s linear infinite;
+}
+
+/* right edge */
+.button span:nth-of-type(2) {
+  position: absolute;
+  top: 0; right: 0;
+  width: 2px; height: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--first-color),
+    var(--first-color-alt)
+  );
+  animation: edgeY 2s linear infinite 0.5s;
+}
+
+/* bottom edge */
+.button span:nth-of-type(3) {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(
+    to left,
+    var(--first-color),
+    var(--first-color-alt)
+  );
+  animation: edgeX 2s linear infinite reverse 1s;
+}
+
+/* left edge */
+.button span:nth-of-type(4) {
+  position: absolute;
+  top: 0; left: 0;
+  width: 2px; height: 100%;
+  background: linear-gradient(
+    to top,
+    var(--first-color),
+    var(--first-color-alt)
+  );
+  animation: edgeY 2s linear infinite reverse 1.5s;
+}
+
+/* ───────── KEYFRAMES ───────── */
+@keyframes edgeX {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%);  }
+}
+@keyframes edgeY {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%);  }
+}
+
+/* ───────── HOVER STATE ───────── */
+.button:hover {
+  background: #1f1f1f;              /* slightly darker on hover */
+}
+
+
+/*=============== PROJECTS (cards) ===============*/
+.projects__card {
+  background-color: var(--container-color);
+  flex: 0 0 320px;    /* try 280px, 300px, 320px, etc. */
+  max-width: 320px;
+  padding: 1.5rem;
+  border-radius: 2rem;
+}
+
+.projects__image {
+  display: block;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.projects__img {
+  transition: transform 0.4s;
+}
+
+.projects__name {
+  font-size: var(--h3-font-size);
+  margin-bottom: 0.5rem;
+}
+
+.projects__description {
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+}
+
+.projects__skill {
+  width: 1rem;
+  transition: transform 0.4s;
+}
+
+.projects__skill:hover {
+  transform: translateY(-0.25rem);
+}
+
+.projects__skills {
+  width: max-content;
+  height: 34px;
+  background-color: var(--black-color);
+  padding-inline: 0.75rem;
+  display: flex;
+  align-items: center;
+  column-gap: 0.75rem;
+  border-radius: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.projects__button {
+  color: var(--white-color);
+  display: inline-flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  transition: color 0.4s;
+}
+
+.projects__button i {
+  font-size: 1.25rem;
+}
+
+.projects__button span {
+  font-weight: var(--font-medium);
+}
+
+.projects__button:hover {
+  color: var(--text-color);
+}
+
+.projects__card:hover .projects__img {
+  transform: scale(1.2);
+}
+
+/*=============== SERVICES ===============*/
+.services__card {
+  background-color: var(--container-color);
+  padding: 4rem 1.5rem 3.5rem 1.5rem;
+  border-radius: 2rem;
+}
+
+.services__icon {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.services__icon i {
+  font-size: 2.5rem;
+  position: relative;
+  z-index: var(--z-tooltip);
+}
+
+.services__circle {
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--first-color);
+  border-radius: 50%;
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  transition: transform 0.4s;
+}
+
+.services__name {
+  font-size: var(--h3-font-size);
+  margin-bottom: 1rem;
+}
+
+.services__description {
+  color: var(--text-color);
+}
+
+.services__card:hover .services__circle {
+  transform: translate(0.25rem, -0.25rem);
+}
+
+/*=============== EXPERIENCE ===============*/
+.experience__container {
+  row-gap: 2rem;
+}
+
+.experience__card {
+  display: grid;
+  row-gap: 1rem;
+}
+
+.experience__company {
+  font-size: var(--h2-font-size);
+}
+
+.experience__data {
+  background-color: var(--container-color);
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+}
+
+.experience__profession {
+  font-size: var(--h3-font-size);
+  margin-bottom: 0.5rem;
+}
+
+.experience__date {
+  display: block;
+  font-size: var(--smaller-font-size);
+  margin-bottom: 1rem;
+}
+
+.experience__description {
+  color: var(--text-color);
+}
+
+/* —— CONTACT CARD —— */
+.contact__inner {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.contact__card {
+  background-color: var(--container-color);
+  padding: 2.5rem 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  max-width: 360px;
+  text-align: center;
+}
+
+.contact__logo {
+  width: 100px;
+  margin: 0 auto 1.5rem;
+  display: block;
+}
+
+.contact__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact__list li {
+  display: flex;
+  align-items: center;
+  margin: 0.75rem 0;
+  font-size: var(--normal-font-size);
+}
+
+.contact__list li i {
+  font-size: 1.25rem;
+  color: var(--first-color);
+  margin-right: 0.75rem;
+}
+
+.contact__list a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: var(--font-medium);
+}
+
+.contact__list a:hover {
+  color: var(--first-color);
+}
+
+
+/*=============== FOOTER ===============*/
+.footer {
+  padding-block: 2rem 8rem;
+}
+
+.footer__container {
+  row-gap: 2.5rem;
+}
+
+.footer__logo {
+  color: var(--white-color);
+  font: var(--font-regular) var(--biggest-font-size) var(--second-font);
+  justify-self: center;
+}
+
+.footer__links {
+  display: flex;
+  justify-content: center;
+  column-gap: 2rem;
+}
+
+.footer__link:hover {
+  color: var(--text-color);
+}
+
+.footer__social {
+  display: flex;
+  justify-content: center;
+  column-gap: 1.5rem;
+}
+
+.footer__social-link {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--first-color);
+  color: var(--white-color);
+  font-size: 1.5rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background-color 0.4s, color 0.4s;
+}
+
+.footer__social-link:hover {
+  background-color: var(--white-color);
+  color: var(--black-color);
+}
+
+.footer__copy {
+  display: block;
+  margin-top: 4.5rem;
+  text-align: center;
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+}
+
+/*=============== SCROLL BAR ===============*/
+::-webkit-scrollbar {
+  width: 0.6rem;
+  background-color: hsl(0, 0%, 20%);
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(0, 0%, 30%);
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(0, 0%, 40%);
+}
+
+/*=============== SCROLL UP ===============*/
+.scrollup {
+  position: fixed;
+  right: 1rem;
+  bottom: 8rem;
+  background-color: hsla(0, 0%, 98%, 0.1);
+  display: inline-flex;
+  padding: 6px;
+  color: var(--white-color);
+  font-size: 1.25rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 0.5rem;
+  z-index: var(--z-tooltip);
+  transition: bottom 0.4s, transform 0.4s;
+}
+
+.scrollup:hover {
+  transform: translateY(-0.5rem);
+}
+
+/* Show Scroll Up */
+.show-scroll {
+  bottom: 8rem;
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For small devices */
+@media screen and (max-width: 320px) {
+  .container {
+    margin-inline: 1rem;
+  }
+
+  .nav {
+    padding: 1rem;
+  }
+}
+
+/* For medium devices */
+@media screen and (min-width: 540px) {
+  .nav {
+    width: max-content;
+  }
+
+  .nav__list {
+    column-gap: 1.25rem;
+  }
+
+  .home__container,
+  .services__container,
+  .experience__container,
+  .contact__container {
+    grid-template-columns: 380px;
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   Tablet (768px–1199px): fluid 3-column “desktop” layout
+   ========================================================================== */
+/* ==========================================================================
+   Tablet (768px–1199px): tighter 3-column + 2-up cards
+   ========================================================================== */
+/* ==========================================================================
+   Tablet (768px–1199px): scaled 3-column + 2-up cards
+   ========================================================================== */
+@media screen and (min-width: 768px) {
+  .projects__container {
+    display: flex !important;        /* override any grid display */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;                       /* spacing between cards */
+    max-width: 1040px;               /* ~ (3×300px cards) + (2×2rem gaps) */
+    margin: 2rem auto 0;
+    padding: 0 1rem;
+  }
+
+  .projects__card {
+    flex: 0 0 300px;                 /* fixed width per card */
+    max-width: 300px;
+    /* optionally scale down slightly if you like the smaller look: */
+    /* transform: scale(0.85);
+       transform-origin: top center; */
+  }
+  .home__container {
+    display: grid;
+    /* side panels shrink to 140px min, center to 220px min; then grow 1:2:1 */
+    grid-template-columns:
+      minmax(140px, 1fr)
+      minmax(220px, 2fr)
+      minmax(140px, 1fr);
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 960px;    /* optional: cap overall width */
+    margin: 0 auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+  .home__container .info   { grid-column: 1; grid-row: 1; }
+  .home__container .perfil { grid-column: 2; grid-row: 1 / span 2; }
+  .home__container .about  { grid-column: 3; grid-row: 1 / span 2; align-content: center; }
+  .home__container .skills { grid-column: 1; grid-row: 2; }
+
+  /* force the portrait image to fill its slot */
+
+
+  /* shrink the “MCreation” logo text on tablets */
+  .home__container .info h1 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  /* WORKS/PROJECTS & SERVICES: exactly 2 cards per row */
+  .services__container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    gap: 1rem;
+    max-width: 960px;    /* align with home__container */
+    margin: 2rem auto 0;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+  /* optional tweak: shrink card padding for a tighter look */
+  .projects__container .card,
+  .services__container .card {
+    padding: 0.75rem;
+  }
+  .experience__container {
+    /* remove the old one-column centering… */
+    grid-template-columns: initial;
+    /* …and pin it back to the left edge: */
+    justify-content: start;
+    /* (if you had a width/max-width, you can leave it – it’ll still align left) */
+  }
+
+  .experience__card {
+    grid-template-columns: 320px 380px;
+    align-items: center;
+  }
+}
+/*────────────────────────────────────────────────────────
+  PERFIL: RESTORE DESKTOP-STYLE CARD ON SMALL SCREENS
+────────────────────────────────────────────────────────*/
+
+
+
+
+@media screen and (max-width: 1024px) {
+  .about__image {
+    height: auto !important; /* let it grow to the image’s natural height */
+  }
+  .about__image img.about__img {
+    position: relative  !important;
+    top: auto          !important;
+    left: auto         !important;
+    transform: none    !important;
+    width: 100%        !important;
+    height: auto       !important;
+  }
+}
+/* For large devices */
+@media screen and (min-width: 1200px) {
+  .container {
+    margin-inline: auto;
+  }
+
+  .section {
+    padding-block: 3rem 4rem;
+  }
+
+  .section__title {
+    font-size: var(--h1-font-size);
+    margin-bottom: 4rem;
+  }
+  .home__container {
+    grid-template-columns: 280px 560px 280px;
+    align-items: stretch;
+  }
+
+  .perfil {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    padding: 2rem;
+  }
+  
+  .perfile__data {
+    width: 370px;
+    padding: 1.5rem;
+    border-radius: 2rem;
+  }
+  .info {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+  .info__name {
+    font-size: var(--h2-font-size);
+  }
+  .about {
+    grid-column: 3 / 4;
+    grid-row: 1 / 3;
+    align-content: center;
+  }
+  .about__image {
+    height: 210px;
+  }
+  .about__img {
+    transform: translateY(-1rem);
+  }
+  .skills {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+  .skills__title {
+    font-size: var(--h3-font-size);
+  }
+.projects__container.grid {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1040px;
+    margin: 2rem auto 0;
+    padding: 0 1rem;
+  }
+
+  .projects__card {
+    flex: 0 0 300px;
+    max-width: 300px;
+  }
+  .services__container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(400px, 1fr));
+    gap: 2rem;
+    width: 20%;
+    max-width: 1120px;      /* matches your home grid max */
+    margin: 2rem auto;      /* centers it below the hero */
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+ 
+  .services__card {
+    padding-block: 6rem 5rem;
+  }
+
+  .services__icon i {
+    font-size: 3.5rem;
+  }
+  .services__circle {
+    width: 4rem;
+    height: 4rem;
+    right: -1.5rem;
+    top: -1.5rem;
+  }
+  .experience__container {
+    row-gap: 4rem;
+  }
+
+  .experience__card {
+    grid-template-columns: 350px 510px;
+    column-gap: 8rem;
+  }
+  .experience__company {
+    font-size: var(--h2-font-size);
+  }
+
+  .experience__data {
+    padding: 2rem;
+    border-radius: 2rem;
+  }
+  .contact__container {
+    grid-template-columns: 620px;
+  }
+
+  .contact__group {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact__area {
+    height: 15rem;
+  }
+
+  .contact__button {
+    width: max-content;
+    justify-self: center;
+  }
+  .footer {
+    padding-top: 3rem;
+  }
+
+  .footer__links {
+    column-gap: 3rem;
+  }
+
+  .footer__copy {
+    margin-top: 7rem;
+  }
+}
+@media screen and (min-width: 1500px) {
+  .nav {
+    width: max-content;
+    height: max-content;
+    padding: 2rem 1rem;
+    left: initial;
+    right: 3rem;
+    top: 0;
+    bottom: 0;
+    margin-block: auto;
+  }
+  .nav__list {
+    flex-direction: column;
+    row-gap: 1.25rem;
+  }
+  .footer {
+    padding: 3rem;
+  }
+  .scrollup {
+    right: 4rem;
+  }
+}
+
+.about__description span {
+  color: var(--first-color);
+}
+
+/*=============== STATS (Views / Likes) ===============*/
+#stats-container {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1000;
+}
+
+/* Smaller “stat-box” by default */
+.stat-box {
+  background-color: var(--container-color);
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: default;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.stat-box.clickable {
+  cursor: pointer;
+}
+
+.stat-box:hover {
+  background-color: var(--first-color-alt);
+}
+
+.stat-icon {
+  width: 1rem;
+  height: 1rem;
+  display: grid;
+  place-items: center;
+  color: var(--white-color);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.stat-box.clickable:hover .stat-icon {
+  transform: scale(1.1);
+}
+
+.stat-count {
+  font-size: 1rem;
+  font-weight: 600;
+  min-width: 1.5rem;
+  text-align: right;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-color);
+  white-space: nowrap;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    color: var(--white-color);
+  }
+  50% {
+    transform: scale(var(--pulse-scale));
+    color: var(--first-color);
+  }
+  100% {
+    transform: scale(1);
+    color: var(--white-color);
+  }
+}
+.pulse {
+  animation: pulse 0.6s ease;
+}
+
+/* On very small screens, shrink further */
+/*────────────────────────────────────────────────────────
+  PERFIL: DESKTOP/TABLET–STYLE IMAGE ON MOBILE
+────────────────────────────────────────────────────────*/
+@media screen and (max-width: 600px) {
+  /* 1) Card container: 4:5 ratio, centered, keep the animated glow */
+  .home__container .perfil {
+    width: 90vw !important;                 /* almost full-width */
+    max-width: none !important;             /* lift any earlier cap */
+    aspect-ratio: 4 / 5 !important;         /* enforce 4:5 ratio */
+    margin: 1.5rem auto !important;         /* center horizontally */
+    padding: 2rem !important;               /* same padding as desktop :contentReference[oaicite:0]{index=0} */
+    border-radius: 2rem !important;         /* match your orange card rounding :contentReference[oaicite:1]{index=1} */
+    display: grid !important;
+    grid-template-rows: 1fr auto !important; /* image fills, panel auto-height :contentReference[oaicite:2]{index=2} */
+    position: relative !important;
+    overflow: visible !important;           /* allow glow to spill out :contentReference[oaicite:3]{index=3} */
+    background: var(--first-color-alt) !important;
+  }
+
+  /* 2) Portrait: absolute-center, full height, auto width (responsive) */
+  .home__container .perfil__img {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important; /* center both axes */
+    height: 100% !important;            /* fill the card height */
+    width: auto !important;             /* preserve aspect ratio */
+    object-fit: cover !important;
+    object-position: center !important;
+    border-radius: inherit !important;
+  }
+
+  /* 3) Data panel: drop over the bottom of the image, centered */
+  .home__container .perfil__data {
+    grid-row: 2 !important;
+    width: calc(100% - 3rem) !important;  /* match desktop width inside card */
+    margin: -60px auto 0 !important;      /* pull up 60px over image, auto-center */
+    padding: 1.5rem 1rem !important;
+    border-radius: 1.5rem !important;     /* same rounding as desktop :contentReference[oaicite:4]{index=4} */
+    background: hsla(0, 0%, 1%, 0.1) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+  }
+
+  /* 4) Buttons: two equal columns inside that panel */
+  .home__container .perfil__buttons {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+    margin-top: 1rem !important;
+  }
+   .info {
+    display: grid !important;
+    gap: 1rem !important;
+    justify-items: center !important;
+    text-align: center !important;
+  }
+
+  /* center the logo wrapper and constrain its width */
+  .info__image {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  /* make sure the img doesn’t overflow */
+  .info__img {
+    width: 140px !important;
+    height: auto !important;
+  }
+
+  /* center the description text & CV button */
+  .info__description {
+    margin: 0 auto 1.5rem !important;
+  }
+  .info .button {
+    margin: 0 auto !important;
+    display: block !important;
+    width: auto !important;
+  }
+  .projects__container {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center !important;  /* center the row */
+    gap: 1rem;
+    padding: 0 1rem;
+    margin: 2rem auto 0;
+  }
+  .projects__logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+    margin: 0.75rem 0;
+  }
+  .projects__logos img,
+  .projects__logos i {
+    width: 1.6rem;
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  /* 2) turn each card into a column flex so we can push the button down */
+  .projects__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* ensure there’s enough height for description + logos */
+    min-height: 20rem;
+  }
+
+  /* 3) always stick “Visit Project” to the bottom */
+  .projects__button {
+    margin-top: auto;
+  }
+}
+/* —— Thumbnail & injected video sizing —— */
+
+
+/* —— Ensure every .gallery__media is square & covers the cell —— */
+.gallery__media {
+  background-size: cover;
+  background-position: center;
+  /* your existing image rules already give it aspect-ratio:1/1, width & height */
+}
+
+/* —— Play-icon overlay —— */
+.video-thumb {
+  position: relative;
+  cursor: pointer;
+}
+
+.video-thumb::after {
+  content: "\f144"; /* remixicon play-circle-line */
+  font-family: "remixicon";
+  font-size: 2.5rem;
+  color: var(--first-color);
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* —— When playing, hide the play icon —— */
+.video-thumb.playing::after {
+  display: none;
+}
+
+/* 1) hide modal by default */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* 2) flex-show it when we toggle the “active” class */
+.modal.active {
+  display: flex;
+}
+
+/* 3) inner box */
+.modal-content {
+  background: #222;
+  padding: 1rem;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+/* 4) close button */
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* 5) modal video takes full width */
+#modal-video-player {
+  width: 100%;
+  height: auto;
+}
+/*─────────────────────────────────────────────────────────────
+/*─────────────────────────────────────────────────────────────
+  Responsive grid + hover-revealed captions for 3D-Animation
+─────────────────────────────────────────────────────────────*/
+.company-gallery[data-company="3d-animation"] {
+  display: grid !important;
+  /* at least 150px per cell, auto-fit as many as will go */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+  gap: 1rem !important;
+}
+
+/* make the heading + description span all the columns */
+.company-gallery[data-company="3d-animation"] > h3,
+.company-gallery[data-company="3d-animation"] > p {
+  grid-column: 1 / -1 !important;
+}
+
+/* ensure each video-wrapper fills its cell */
+.company-gallery[data-company="3d-animation"] > .video-wrapper {
+  width: 100%;
+  position: relative; /* for absolute caption */
+}
+
+/* your existing square→full-size toggle */
+.company-gallery[data-company="3d-animation"] .video-wrapper video {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  transition: aspect-ratio 0.3s ease, height 0.3s ease;
+}
+.company-gallery[data-company="3d-animation"] .video-wrapper video:not(:paused) {
+  aspect-ratio: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* hide captions until hover */
+.company-gallery[data-company="3d-animation"] .video-wrapper .caption {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 0.875rem;
+  text-align: center;
+  border-radius: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.company-gallery[data-company="3d-animation"] .video-wrapper:hover .caption {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+
+
+
+
+
+
+
+
+/* ————————————————————————
+   RAINBOW BORDER ANIMATION
+   ———————————————————————— */
+.block {
+  position: relative;
+  margin: 300px auto 0;
+  width: 500px;
+  height: 250px;
+  background: linear-gradient(0deg, #000, #272727);
+}
+
+.block:before,
+.block:after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  background: linear-gradient(
+    45deg,
+    #fb0094, #0000ff, #00ff00, #ffff00, #ff0000,
+    #fb0094, #0000ff, #00ff00, #ffff00, #ff0000
+  );
+  background-size: 400%;
+  z-index: -1;
+  animation: steam 20s linear infinite;
+}
+
+@keyframes steam {
+  0%   { background-position: 0 0;   }
+  50%  { background-position: 400% 0; }
+  100% { background-position: 0 0;   }
+}
+
+.block:after {
+  filter: blur(50px);
+}

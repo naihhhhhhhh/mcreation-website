@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--=============== FAVICON ===============-->
+  <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon" />
+
+  <!--=============== REMIXICONS ===============-->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"
+  />
+
+  <!--=============== CSS ===============-->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <title>3D Modeling | Mcreation Studio</title>
+
+  <style>
+    /*
+      1) Allow vertical scroll.
+      2) One .section-fill wrapper around the single section.
+      3) Subtle hover translateY on thumbnails.
+      4) Responsive grid.
+    */
+
+    html {
+      min-height: 100%;
+    }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--body-color);
+      color: var(--white-color);
+      font-family: var(--body-font);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    /*———————————————————————————————
+      Container & Spacing
+    ————————————————————————————————*/
+    .gallery-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1rem 1rem;
+    }
+    .section__title {
+      text-align: center;
+      margin: 0 0 1.5rem;
+      font-size: var(--h1-font-size);
+    }
+
+    /*———————————————————————————————
+      Single .section-fill wrapper
+    ————————————————————————————————*/
+    .section-fill {
+      background-color: var(--container-color);
+      border-radius: 1rem;
+      padding: 1.5rem 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .company-gallery h3 {
+      font-size: var(--h2-font-size);
+      margin: 0;
+      margin-bottom: 0.5rem;
+    }
+    .company-gallery p {
+      color: var(--text-color);
+      margin: 0 0 1rem;
+    }
+
+    /*———————————————————————————————
+      Responsive grid: 6 columns desktop, 5 tablet, auto-wrap
+    ————————————————————————————————*/
+    .gallery__grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+    @media screen and (min-width: 600px) {
+      .gallery__grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+    @media screen and (min-width: 1024px) {
+      .gallery__grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    /*———————————————————————————————
+      Hover: translateY(-0.25rem)
+    ————————————————————————————————*/
+    .gallery__media {
+      width: 100%;
+      border-radius: 0.75rem;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      aspect-ratio: 16/9;
+    }
+    .gallery__media:hover {
+      transform: translateY(-0.25rem);
+    }
+
+    /*———————————————————————————————
+      Lightbox overlay (images only)
+    ————————————————————————————————*/
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1rem;
+    }
+    .lightbox.active {
+      display: flex;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .lightbox-img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 0.75rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+    }
+    .lightbox-close:hover {
+      color: var(--first-color);
+    }
+
+    /*———————————————————————————————
+      Copyright at bottom
+    ————————————————————————————————*/
+    .copyright {
+      text-align: center;
+      padding: 1rem 0;
+      font-size: var(--small-font-size);
+      color: var(--text-color);
+      background-color: var(--container-color);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!--==================== NAV ====================-->
+  <nav class="nav">
+    <ul class="nav__list">
+      <li>
+        <a href="index.html#home" title="Home" class="nav__link">
+          <i class="ri-home-line"></i>
+        </a>
+      </li>
+      <li>
+        <a href="index.html#projects" title="Projects" class="nav__link">
+          <i class="ri-folder-line"></i>
+        </a>
+      </li>
+      <li>
+        <a href="index.html#services" title="Services" class="nav__link">
+          <i class="ri-file-edit-line"></i>
+        </a>
+      </li>
+      <li>
+        <a href="index.html#experience" title="Experience" class="nav__link">
+          <i class="ri-honour-line"></i>
+        </a>
+      </li>
+      <li>
+        <a href="index.html#contact" title="Contact" class="nav__link">
+          <i class="ri-send-plane-line"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!--==================== 3D MODELING PROJECT ====================-->
+  <main class="main section gallery-container">
+    <h2 class="section__title">3D Modeling</h2>
+
+    <!--———————————————————————————————
+      Only one section here (no filter needed)
+    ————————————————————————————————-->
+    <div class="section-fill">
+      <div class="company-gallery active" data-company="modeling">
+        <h3>Project Three (3D Modeling)</h3>
+        <p>Several shots from our 3D modeling portfolio.</p>
+        <div class="gallery__grid">
+          <img
+            src="assets/img/projects-2.jpg"
+            alt="3D Modeling Image 1"
+            class="gallery__media"
+          />
+          <img
+            src="assets/img/projects-2-2.jpg"
+            alt="3D Modeling Image 2"
+            class="gallery__media"
+          />
+          <img
+            src="assets/img/projects-2-3.jpg"
+            alt="3D Modeling Image 3"
+            class="gallery__media"
+          />
+          <img
+            src="assets/img/projects-2-4.jpg"
+            alt="3D Modeling Image 4"
+            class="gallery__media"
+          />
+          <img
+            src="assets/img/projects-2-5.jpg"
+            alt="3D Modeling Image 5"
+            class="gallery__media"
+          />
+          <img
+            src="assets/img/projects-2-6.jpg"
+            alt="3D Modeling Image 6"
+            class="gallery__media"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- /.section-fill -->
+  </main>
+
+  <!--==================== LIGHTBOX (Images Only) ====================-->
+  <div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img class="lightbox-img" src="" alt="Enlarged Image" />
+  </div>
+
+  <!--==================== COPYRIGHT AT BOTTOM ====================-->
+  <div class="copyright">
+    &#169; 2025 Mcreation. All rights reserved.
+  </div>
+
+  <!--==================== SCROLL UP ====================-->
+  <a href="#" class="scrollup" id="scroll-up">
+    <i class="ri-arrow-up-line"></i>
+  </a>
+
+  <!--=============== SCROLLREVEAL ===============-->
+  <script src="assets/js/scrollreveal.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // ------- Lightbox Logic for IMAGES -------
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.querySelector('.lightbox-img');
+      const lightboxClose = document.querySelector('.lightbox-close');
+
+      document.querySelectorAll('.gallery__media').forEach(el => {
+        el.addEventListener('click', () => {
+          lightboxImg.src = el.src;
+          lightbox.classList.add('active');
+        });
+      });
+
+      lightboxClose.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+      });
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.classList.remove('active');
+        }
+      });
+
+      // ------- ScrollReveal Animations -------
+      const sr = ScrollReveal({
+        origin: 'top',
+        distance: '60px',
+        duration: 2500,
+        delay: 400,
+      });
+      sr.reveal('.section-fill', {
+        origin: 'bottom',
+        distance: '40px',
+        delay: 300,
+        interval: 100
+      });
+      sr.reveal('.gallery__media', {
+        scale: 0.9,
+        interval: 100,
+        delay: 400
+      });
+
+      // ------- Show Scroll Up Button -------
+      const scrollUpEl = document.getElementById('scroll-up');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY >= 350) {
+          scrollUpEl.classList.add('show-scroll');
+        } else {
+          scrollUpEl.classList.remove('show-scroll');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

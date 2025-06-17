@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="MCreation Portfolio Website" />
+<meta property="og:description" content="Check out my portfolio website!" />
+<meta property="og:image" content="https://mnicer2004.github.io/mcreation/assets/preview.png" />
+<meta property="og:url" content="https://mnicer2004.github.io/mcreation" />
+<meta property="og:type" content="website" />
+
+  <title>MCreation Portfolio Website</title>
+
+  <!--=============== FAVICON ===============-->
+  <link rel="shortcut icon" href="assets/img/Asset 10.png" type="image/x-icon" />
+
+  <!--=============== REMIXICONS ===============-->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css"
+  />
+
+  <!--=============== CSS ===============-->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!--=============== FIREBASE SDKs (compat) ===============-->
+  <!-- These two scripts load Firebase’s “compat” SDK so we can call firebase.database(). -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+  <!--=============== END FIREBASE SDKs ===============-->
+
+  <!--=============== STATS BOX CSS (small embedded snippet) ===============-->
+  <style>
+    /*———— FIREBASE COUNTER STYLES —————————————*/
+    #stats-container {
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 1000;
+    }
+    .stat-box {
+      background-color: hsl(265, 2%, 10%);
+      border-radius: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+      transition: background-color 0.3s ease;
+    }
+    .stat-box:hover {
+      background-color: hsl(265, 76%, 45%);
+    }
+    .stat-icon {
+      width: 1rem;
+      height: 1rem;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      color: white;
+      transition: transform 0.2s ease;
+    }
+    .stat-box:hover .stat-icon {
+      transform: scale(1.1);
+    }
+    .stat-count {
+      font-size: 1rem;
+      font-weight: 600;
+      min-width: 1.2rem;
+      text-align: right;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: hsl(265, 2%, 66%);
+      white-space: nowrap;
+    }
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        color: white;
+      }
+      50% {
+        transform: scale(1.2);
+        color: hsl(265, 80%, 49%);
+      }
+      100% {
+        transform: scale(1);
+        color: white;
+      }
+    }
+    .pulse {
+      animation: pulse 0.6s ease;
+    }
+
+    @media screen and (max-width: 600px) {
+      .stat-box {
+        padding: 0.4rem 0.6rem;
+        gap: 0.4rem;
+      }
+      .stat-icon {
+        width: 0.9rem;
+        height: 0.9rem;
+        font-size: 0.9rem;
+      }
+      .stat-count {
+        font-size: 0.875rem;
+        min-width: 1rem;
+      }
+      .stat-label {
+        font-size: 0.65rem;
+      }
+    }
+    /*———— END FIREBASE COUNTER STYLES —————————————*/
+  </style>
+  <!--=============== END STATS BOX CSS ===============-->
+</head>
+
+<body id="app">
+  
+  <!--==================== FIREBASE STATS CONTAINER ====================-->
+  <div id="stats-container">
+    <!-- Views box -->
+    <div class="stat-box">
+      <div class="stat-icon">
+        <i class="ri-eye-line"></i>
+      </div>
+      <div>
+        <div id="view-count" class="stat-count">0</div>
+        <div class="stat-label">Views</div>
+      </div>
+    </div>
+
+    <!-- Likes box -->
+    <div class="stat-box clickable" id="like-box">
+      <div class="stat-icon">
+        <i class="ri-heart-line"></i>
+      </div>
+      <div>
+        <div id="like-count" class="stat-count">0</div>
+        <div class="stat-label">Likes</div>
+      </div>
+    </div>
+  </div>
+  <!--==================== END FIREBASE STATS CONTAINER ====================-->
+  <!--==================== NAV ====================-->
+  <nav class="nav">
+    <ul class="nav__list">
+      <li>
+        <a href="#home" title="Home" class="nav__link" active-link>
+          <i class="ri-home-line"></i>
+        </a>
+      </li>
+
+      <li>
+        <a href="#projects" title="Projects" class="nav__link">
+          <i class="ri-folder-line"></i>
+        </a>
+      </li>
+
+      <li>
+        <a href="#services" title="Services" class="nav__link">
+          <i class="ri-file-edit-line"></i>
+        </a>
+      </li>
+
+      <li>
+        <a href="#experience" title="Experience" class="nav__link">
+          <i class="ri-honour-line"></i>
+        </a>
+      </li>
+
+      <li>
+        <a href="#contact" title="Contact" class="nav__link">
+          <i class="ri-send-plane-line"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!--==================== MAIN ====================-->
+  <main class="main">
+    <!--==================== HOME ====================-->
+    <section class="home section" id="home">
+      <div class="home__container container grid">
+        <!--===== PERFIL =====-->
+        <div class="perfil">
+          <img
+            src="assets/img/home-perfil.png"
+            alt="image"
+            class="perfil__img"
+          />
+
+          <div class="perfil__data">
+            <!--<h1 class="perfil__name">WELCOME TO<br />MCREATIONSTUDIO</h1>-->
+
+            <div class="perfil__buttons">
+              <a href="#projects" class="button"><span></span><span></span><span></span><span></span>Projects</a>
+              <a href="#services" class="button button__black"><span></span><span></span><span></span><span></span>Services</a>
+            </div>
+          </div>
+        </div>
+
+        <!--===== INFO =====-->
+        <div class="info">
+          <div class="info__data">
+            <div class="info__circle"></div>
+            <h1 class="info__name">MCreation</h1>
+          </div>
+
+          <div class="info__image">
+            <img
+              src="assets/img/logo1.png"
+              alt="image"
+              class="info__img"
+            />
+          </div>
+
+          <p class="info__description">
+            I enjoy creating and designing clean, engaging, and user-friendly interfaces.
+          </p>
+          <a href="assets/pdf/Resume.pdf" download target="_blank" class="button">
+  <span></span><span></span><span></span><span></span>
+  Download CV
+</a>
+
+</span>
+        </div>
+
+        <!--===== ABOUT =====-->
+        <div class="about">
+          <h3 class="about__name">
+            <i class="ri-pen-nib-fill"></i>
+              <b>Graphic & 3d Designer</b>
+          </h3>
+
+          <p class="about__description">
+            I am <b><span>Mark Christian E. Nicer</span></b>, a creative and
+            dedicated individual skilled in 3D modeling, animation, and graphic
+            design. I enjoy visual projects, continuously learning new skills,
+            and collaborating effectively with others.
+          </p>
+
+          <div class="about__social">
+            <a
+              href="https://www.artstation.com/mcreationstudio"
+              target="_blank"
+              class="about__link"
+            >
+              <i class="ri-external-link-fill"></i>
+            </a>
+
+            <a href="https://github.com/" target="_blank" class="about__link">
+              <i class="ri-github-line"></i>
+            </a>
+
+            <a
+              href="https://www.facebook.com/mcreationfb/"
+              target="_blank"
+              class="about__link"
+            >
+              <i class="ri-facebook-box-line"></i>
+            </a>
+          </div>
+
+          <div class="about__image">
+            <img
+              src="assets/img/home-perfil.png"
+              alt="image"
+              class="about__img"
+            />
+          </div>
+
+          <p class="about__note">
+            <br />Interested in collaborating or have a project idea? feel free
+            to reach out.
+          </p>
+
+          <a href="#contact" class="button"><span></span><span></span><span></span><span></span>Contact Me</a>
+        </div>
+
+        <!--===== SKILLS =====-->
+        <div class="skills">
+          <h2 class="skills__title">Skills</h2>
+
+          <div class="skills__items">
+            <img
+              src="assets/img/skills-html.svg"
+              alt="image"
+              class="skills__item"
+            />
+            <img
+              src="assets/img/skills-css.svg"
+              alt="image"
+              class="skills__item"
+            />
+            <img
+              src="assets/img/skills-javascript.svg"
+              alt="image"
+              class="skills__item"
+            />
+            <img src="assets/img/php.svg" alt="image" class="skills__item" />
+            <img src="assets/img/java.svg" alt="image" class="skills__item" />
+            <img src="assets/img/git-bash.svg" alt="image" class="skills__item" />
+            <img src="assets/img/firebase.png" alt="image" class="skills__item" />
+            <img
+              src="assets/img/skills-github.svg"
+              alt="image"
+              class="skills__item"
+            />
+            <img
+              src="assets/img/blender-2.svg"
+              alt="image"
+              class="skills__item"
+            />
+            <img
+              src="assets/img/figma.svg"
+              alt="image"
+              class="skills__item"
+            />
+            <img
+              src="assets/img/adobe-illustrator-cc-3.svg"
+              alt="image"
+              class="skills__item"
+            />
+            <img
+              src="assets/img/skills-photoshop.svg"
+              alt="image"
+              class="skills__item"
+            />
+            <img src="assets/img/ae.svg" alt="image" class="skills__item" />
+            <img
+              src="assets/img/cc-white.svg"
+              alt="image"
+              class="skills__item"
+            />
+            <img
+              src="assets/img/canva.svg"
+              alt="image"
+              class="skills__item"
+            />
+            <img
+                src="assets/img/pureref.svg"
+                alt="image"
+                class="projects__skill"
+              />
+          </div>
+
+          <p class="skills__description">
+            I work with HTML, CSS, JavaScript, PHP, Java, and Git for development, and use Illustrator, Photoshop, After Effects, Figma, Canva, and Blender for design and creative projects.
+
+
+
+
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!--==================== PROJECTS ====================-->
+    <section class="projects section" id="projects">
+      <h2 class="section__title">WORKS/PROJECTS</h2>
+
+      <div class="projects__container container grid">
+        <article class="projects__card">
+          <a href="gallery-project1.html" target="_blank" class="projects__image">
+            <img
+              src="assets/img/project-bg1.png"
+              alt="image"
+              class="projects__img"
+            />
+          </a>
+
+          <div class="projects__data">
+            <h3 class="projects__name">ALL PROJECTS</h3>
+            <p class="projects__description">
+              A collection of works showcasing different skills and creative outputs.
+            </p>
+            <div class="projects__skills">
+              <img
+                src="assets/img/blender-2.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/figma.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/skills-photoshop.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/adobe-illustrator-cc-3.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/ae.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/cc-white.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/canva.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/pureref.svg"
+                alt="image"
+                class="projects__skill"
+              />
+            </div>
+
+            <a href="gallery-project1.html" target="_blank" class="projects__button">
+              <i class="ri-link"></i>
+              <span>Visit Project</span>
+            </a>
+          </div>
+        </article>
+        <!--
+        <article class="projects__card">
+          <a href="gallery-project2.html" target="_blank" class="projects__image">
+            <img
+              src="assets/img/project-bg2.png"
+              alt="image"
+              class="projects__img"
+            />
+          </a>
+         
+          <div class="projects__data">
+            <h3 class="projects__name">GRAPHIC DESIGN</h3>
+            <p class="projects__description">
+              Creative visuals crafted for advertisements, promotions, and digital content. 
+            </p>
+            <div class="projects__skills">
+              <img
+                src="assets/img/skills-photoshop.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/adobe-illustrator-cc-3.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/figma.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/canva.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/pureref.svg"
+                alt="image"
+                class="projects__skill"
+              />
+            </div>
+
+            <a href="gallery-project2.html" target="_blank" class="projects__button">
+              <i class="ri-link"></i>
+              <span>Visit Project</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="projects__card">
+          <a href="gallery-project3.html" target="_blank" class="projects__image">
+            <img
+              src="assets/img/project-bg3.png"
+              alt="image"
+              class="projects__img"
+            />
+          </a>
+
+          <div class="projects__data">
+            <h3 class="projects__name">3D MODELING</h3>
+            <p class="projects__description">
+Projects featuring detailed 3D assets and digital object creation.
+            </p>
+            <div class="projects__skills">
+              <img
+                src="assets/img/blender-2.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/skills-photoshop.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/adobe-illustrator-cc-3.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/pureref.svg"
+                alt="image"
+                class="projects__skill"
+              />
+            </div>
+
+            <a href="gallery-project3.html" target="_blank" class="projects__button">
+              <i class="ri-link"></i>
+              <span>Visit Project</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="projects__card">
+          <a href="gallery-project4.html" target="_blank" class="projects__image">
+            <img
+              src="assets/img/project-bg4.png"
+              alt="image"
+              class="projects__img"
+            />
+          </a>
+
+          <div class="projects__data">
+            <h3 class="projects__name">3D ANIMATION</h3>
+            <p class="projects__description">
+              Animated presentations that highlight product features, form, and function.
+            </p>
+            <div class="projects__skills">
+              <img
+                src="assets/img/blender-2.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/skills-photoshop.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/adobe-illustrator-cc-3.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/cc-white.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/pureref.svg"
+                alt="image"
+                class="projects__skill"
+              />
+            </div>
+
+            <a href="gallery-project4.html" target="_blank" class="projects__button">
+              <i class="ri-link"></i>
+              <span>Visit Project</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="projects__card">
+          <a href="gallery-project4.html" target="_blank" class="projects__image">
+            <img
+              src="assets/img/project-bg5.png"
+              alt="image"
+              class="projects__img"
+            />
+          </a>
+
+          <div class="projects__data">
+            <h3 class="projects__name">App Design & Development</h3>
+            <p class="projects__description">
+              Animated presentations that highlight product features, form, and function.
+            </p>
+            <div class="projects__skills">
+              <img
+                src="assets/img/blender-2.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/skills-photoshop.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/adobe-illustrator-cc-3.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/cc-white.svg"
+                alt="image"
+                class="projects__skill"
+              />
+              <img
+                src="assets/img/pureref.svg"
+                alt="image"
+                class="projects__skill"
+              />
+            </div>
+
+            <a href="gallery-project4.html" target="_blank" class="projects__button">
+              <i class="ri-link"></i>
+              <span>Visit Project</span>
+            </a>
+          </div>
+        </article>-->
+      </div>
+    </section>
+
+    <!--==================== SERVICES ====================-->
+    <section class="services section" id="services">
+      <h2 class="section__title">SERVICES I OFFER</h2>
+
+      <div class="services__container container grid">
+        <article class="services__card">
+          <div class="services__icon">
+            <div class="services__circle"></div>
+            <i class="ri-box-3-line"></i>
+          </div>
+
+          <h3 class="services__name">Graphic Design</h3>
+          <p class="services__description">
+            Short description of the service offered to users to obtain a
+            personalized project.
+          </p>
+        </article>
+
+        <article class="services__card">
+          <div class="services__icon">
+            <div class="services__circle"></div>
+            <i class="ri-pen-nib-line"></i>
+          </div>
+
+          <h3 class="services__name">Product Design</h3>
+          <p class="services__description">
+            Short description of the service offered to users to obtain a
+            personalized project.
+          </p>
+        </article>
+
+        <article class="services__card">
+          <div class="services__icon">
+            <div class="services__circle"></div>
+            <i class="ri-seo-line"></i>
+          </div>
+
+          <h3 class="services__name">3d Model/Animation</h3>
+          <p class="services__description">
+            Short description of the service offered to users to obtain a
+            personalized project.
+          </p>
+        </article>
+
+        <article class="services__card">
+          <div class="services__icon">
+            <div class="services__circle"></div>
+            <i class="ri-seo-line"></i>
+          </div>
+
+          <h3 class="services__name">UI/UX Design </h3>
+          <p class="services__description">
+            Short description of the service offered to users to obtain a
+            personalized project.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!--==================== EXPERIENCE ====================-->
+    <section class="stats section" id="stats">
+  <h2 class="section__title"></h2>
+  <div class="stats__container container grid">
+    <div class="stats__card">
+      <div class="stats__number" data-target="6">2+</div>
+      <div class="stats__label">Years Experience</div>
+    </div>
+    <div class="stats__card">
+      <div class="stats__number" data-target="421">10+</div>
+      <div class="stats__label">Clients Worldwide</div>
+    </div>
+    <div class="stats__card">
+      <div class="stats__number" data-target="1200">100+</div>
+      <div class="stats__label">Completed Projects</div>
+    </div>
+  </div>
+</section>
+
+
+    <!--==================== CONTACT ====================-->
+<section class="contact section" id="contact">
+  <h2 class="section__title">CONTACT</h2>
+
+  <div class="contact__inner container">
+    <div class="contact__card">
+      <!-- your logo -->
+      <img
+        src="assets/img/logo1.png"
+        alt="MCreation Logo"
+        class="contact__logo"
+      />
+
+      <ul class="contact__list">
+        <li>
+          <i class="ri-mail-line"></i>
+          <a href="mailto:mcreationstudio1@gmail.com">mcreationstudio1@gmail.com</a>
+        </li>
+        <li>
+          <i class="ri-whatsapp-line"></i>
+          <a href="https://wa.me/639462283150" target="_blank">+63 946 228 3150</a>
+        </li>
+        <li>
+          <i class="ri-facebook-box-fill"></i>
+          <a href="https://www.facebook.com/mcreationfb/" target="_blank">facebook.com/mcreationfb</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+  </main>
+
+  <!--==================== FOOTER ====================-->
+  <div class="footer">
+    <span class="footer__copy">&#169; 2025 Mcreation. All rights reserved.</span>
+  </div>
+
+  <!--==================== SCROLL UP ====================-->
+  <a href="#" class="scrollup" id="scroll-up">
+    <i class="ri-arrow-up-line"></i>
+  </a>
+
+  <!--=============== MAIN JS ===============-->
+  <script src="assets/js/scrollreveal.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <!--=============== FIREBASE INITIALIZATION & COUNTERS ===============-->
+  <script>
+    // ────────── (A) Your Firebase Config ──────────
+    // Paste exactly what Firebase gave you, including databaseURL
+    var firebaseConfig = {
+      apiKey: "AIzaSyB5zsyxwAEFGUjvHDEW-wkG5ERWLLHe9k4",
+      authDomain: "personalwebsite-9636e.firebaseapp.com",
+      databaseURL: "https://personalwebsite-9636e-default-rtdb.asia-southeast1.firebasedatabase.app/",
+      projectId: "personalwebsite-9636e",
+      storageBucket: "personalwebsite-9636e.appspot.com",
+      messagingSenderId: "464423539962",
+      appId: "1:464423539962:web:b386e0334f62d10f84e543",
+      measurementId: "G-MDE0PECK8"
+    };
+    // ────────────────────────────────────────────────────
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Obtain a reference to the Realtime Database
+    var database = firebase.database();
+
+    // Create references for “views” and “likes” nodes
+    var viewsRef = database.ref("metrics/views");
+    var likesRef = database.ref("metrics/likes");
+
+    // Grab the DOM elements for counts and the like‐box
+    const viewCountEl = document.getElementById("view-count");
+    const likeCountEl = document.getElementById("like-count");
+    const likeBox = document.getElementById("like-box");
+
+    // When the DOM is ready:
+    document.addEventListener("DOMContentLoaded", () => {
+      // ────────── (1) Increment “views” on every page load ──────────
+      viewsRef.transaction(
+        (current) => (current || 0) + 1,
+        (error, committed, snapshot) => {
+          if (error) {
+            console.error("Views transaction error:", error);
+            viewCountEl.textContent = "—";
+          } else if (committed) {
+            const updatedViews = snapshot.val();
+            viewCountEl.textContent = updatedViews;
+            viewCountEl.classList.add("pulse");
+            setTimeout(() => viewCountEl.classList.remove("pulse"), 600);
+          }
+        }
+      );
+
+      // ────────── (2) Load the current “likes” count once ──────────
+      likesRef
+        .once("value")
+        .then((snapshot) => {
+          const likes = snapshot.val() || 0;
+          likeCountEl.textContent = likes;
+        })
+        .catch((err) => {
+          console.error("Failed to load likes:", err);
+          likeCountEl.textContent = "0";
+        });
+
+      // ────────── (3) On heart‐box click, increment “likes” ──────────
+      likeBox.addEventListener("click", () => {
+        // Disable further clicks until reload
+        likeBox.style.pointerEvents = "none";
+        likeBox.style.opacity = "0.6";
+
+        likesRef.transaction(
+          (current) => (current || 0) + 1,
+          (error, committed, snapshot) => {
+            if (error) {
+              console.error("Likes transaction error:", error);
+            } else if (committed) {
+              const newLikes = snapshot.val();
+              likeCountEl.textContent = newLikes;
+              likeCountEl.classList.add("pulse");
+              setTimeout(() => likeCountEl.classList.remove("pulse"), 600);
+            }
+          }
+        );
+      });
+    });
+  </script>
+  <!--=============== END FIREBASE INITIALIZATION & COUNTERS ===============-->
+
+  <!--=============== SHOW SCROLL UP ===============-->
+  <script>
+    const scrollUp = () => {
+      const scrollUpEl = document.getElementById("scroll-up");
+      this.scrollY >= 350
+        ? scrollUpEl.classList.add("show-scroll")
+        : scrollUpEl.classList.remove("show-scroll");
+    };
+    window.addEventListener("scroll", scrollUp);
+  </script>
+</body>
+</html>
