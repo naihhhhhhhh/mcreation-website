@@ -231,7 +231,7 @@
     <div id="modeling" class="tab-content">
       <div class="company-section">
         <h3>3D Modeling Work</h3>
-        <p>Samples of 3D modeling projects I’ve done.</p>
+        <p>Samples of 3D modeling projects I've done.</p>
         <div class="gallery__grid">
           <img
             src="assets/img/3d-1.jpg"
@@ -261,7 +261,7 @@
     <div id="animation" class="tab-content">
       <div class="company-section">
         <h3>3D Animation Work</h3>
-        <p>Samples of 3D animation projects I’ve done.</p>
+        <p>Samples of 3D animation projects I've done.</p>
         <div class="gallery__grid">
           <img
             src="assets/img/anim-1.jpg"
@@ -354,3 +354,96 @@
   <script src="assets/js/main.js"></script>
 </body>
 </html>
+
+<style>
+.projects__card--horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  max-width: 700px;
+  margin: 2rem auto;
+  background: var(--container-color);
+  border-radius: 2rem;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+  overflow: hidden;
+  min-height: 320px;
+}
+.projects__card-imgwrap {
+  flex: 1 1 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #181818;
+  min-width: 220px;
+  max-width: 320px;
+}
+.projects__card-imgwrap img {
+  width: 100%;
+  height: auto;
+  border-radius: 1.5rem 0 0 1.5rem;
+  object-fit: cover;
+  max-height: 320px;
+}
+.projects__card-content {
+  flex: 2 1 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem 2rem;
+}
+.projects__name {
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+}
+.projects__description--large {
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+}
+.projects__skills--large {
+  margin-bottom: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  background: #111;
+  display: flex;
+  gap: 1.2rem;
+}
+.projects__skill {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+.projects__button--large {
+  font-size: 1.15rem;
+  padding: 1rem 2.5rem;
+  border-radius: 2rem;
+  background: var(--first-color);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  margin-top: 1.5rem;
+  transition: background 0.2s;
+}
+.projects__button--large:hover {
+  background: var(--first-color-alt);
+  color: #fff;
+}
+@media (max-width: 900px) {
+  .projects__card--horizontal {
+    flex-direction: column;
+    min-height: unset;
+    max-width: 98vw;
+  }
+  .projects__card-imgwrap img {
+    border-radius: 1.5rem 1.5rem 0 0;
+    max-height: 220px;
+  }
+  .projects__card-content {
+    padding: 2rem 1.2rem;
+  }
+  .projects__name {
+    font-size: 1.5rem;
+  }
+}
+</style>
